@@ -9,19 +9,19 @@
 
 int find(int parent[], int i)
 {
-	printf("inside find function for %d \n", i);
+	//printf("inside find function for %d \n", i);
 	return parent[i];
 }
  
 int Union(int parent[], int v1, int v2)
 { 
 
- printf("inside union function: v1= %d \t v2= %d \n",v1,v2);
+// printf("inside union function: v1= %d \t v2= %d \n",v1,v2);
  if(v1 != v2)
  {
-		printf("v1 !=v2\n ");
+	//	printf("v1 !=v2\n ");
 		parent[v2]=v1;
-		printf("returning \n");
+	//	printf("returning \n");
 		return 1;
 	}
  
@@ -49,7 +49,7 @@ graph_t sort_given_graph(graph_t g)
  int id2 =0;
  int e_weight = 0;
  int f_weight = 0;
- printf("sorting graphs: \n");
+// printf("sorting graphs: \n");
 
  for (e = g->e; e!= NULL; e = e->next) 
  {
@@ -58,7 +58,7 @@ graph_t sort_given_graph(graph_t g)
 	{
 	 
 	 e_weight = get_tuple_weight(e->tuple, g->el);
-	 printf("e_weight is: %d \n", e_weight);
+	// printf("e_weight is: %d \n", e_weight);
 	
 	}
 
@@ -69,7 +69,7 @@ graph_t sort_given_graph(graph_t g)
 		 {
 			
 			f_weight = get_tuple_weight(f->tuple, g->el);
-			printf("f_weight is: %d, e_weight is: %d \n", f_weight, e_weight);
+			//printf("f_weight is: %d, e_weight is: %d \n", f_weight, e_weight);
 		 
 		 }
 
@@ -92,8 +92,8 @@ graph_t sort_given_graph(graph_t g)
 					f->tuple = t;
 	 		}
 
-			printf(" e's ids: %d %d\n",e->id1, e->id2 );
-			printf(" f's ids: %d %d\n",f->id1, f->id2 );
+		//	printf(" e's ids: %d %d\n",e->id1, e->id2 );
+		//	printf(" f's ids: %d %d\n",f->id1, f->id2 );
 		}	
 	
  }
@@ -116,14 +116,14 @@ graph_t init_graph(int id1)
  vertex_init(v);
  v->id = id1;
 
- printf("init vertex\n");
+ //printf("init vertex\n");
  // Create new graph /
  temp = (graph_t) malloc(sizeof(struct graph));
  assert (temp != NULL);
  graph_init(temp);
  graph_insert_vertex(temp, v);
 
- printf("init the graph:\n");
+// printf("init the graph:\n");
  if (graphs == NULL)
 	current = temp;
 
@@ -149,8 +149,8 @@ void run_kruskal(graph_t g, int num_vertices, int num_edges)
  
  sorted_graph = sort_given_graph(g);
 
- graph_print(sorted_graph,1);
- printf("sorted \n");
+ //graph_print(sorted_graph,1);
+ //printf("sorted \n");
 
  
  //initializing parent vector
@@ -159,16 +159,16 @@ void run_kruskal(graph_t g, int num_vertices, int num_edges)
 			parent[j] = j;
 	}
 
-printf("initialized parent array \n");
+//printf("initialized parent array \n");
 		
 	
 		// terminating condition for mst
 	while(e < (V-1))
 	{
 		 
-		 	printf("found %d edges in the MST: %d",e);
+		 	//printf("found %d edges in the MST: %d",e);
 		 	current_edge = sorted_graph->e;
-		 	printf(" looking to add edge\n");
+		 	//printf(" looking to add edge\n");
 
 			int x = find(parent, current_edge->id1);
 			int y = find(parent, current_edge->id2);
@@ -180,15 +180,15 @@ printf("initialized parent array \n");
 			
 			if (Union(parent, x, y))
 			{
-				printf("adding edge: ");
+				//printf("adding edge: ");
 				//add edge to final result
-				edge_print(current_edge);
+				//edge_print(current_edge);
 
 				total_cost += get_tuple_weight(current_edge->tuple, sorted_graph->el);	
 				
 				if(result_graph == NULL)
 				{
-					printf("result graph is null, init it.\n");
+					//printf("result graph is null, init it.\n");
 					result_graph = init_graph(current_edge->id1);
 
 					// add vertex id2 now. 
@@ -207,6 +207,7 @@ printf("initialized parent array \n");
 					edge_init(ed);
 					edge_set_vertices(ed, current_edge->id1, current_edge->id2);
 
+					ed->tuple = current_edge->tuple;
 					graph_insert_edge(result_graph, ed);
 				}
 			
@@ -238,12 +239,12 @@ printf("initialized parent array \n");
 							graph_insert_vertex(result_graph, w);
 					}
 
-					
+
 					ed = (edge_t) malloc(sizeof(struct edge));
 					assert (ed != NULL);
 					edge_init(ed);
 					edge_set_vertices(ed, current_edge->id1, current_edge->id2);
-
+					ed->tuple = current_edge->tuple;
 					graph_insert_edge(result_graph, ed);
 						 
 				}
@@ -286,13 +287,13 @@ void cli_kruskal(char cmdline, int pos)
  for (g = graphs; g != NULL; g = g->next, cnt++) 
  {
 		if (g == current){
-	 	printf("current graph: \n");
+	 	//printf("current graph: \n");
 	 	for(v = g->v; v != NULL; v = v->next) 
 	 		vertex_count++; 
-	 	printf("vertex count is: %d \n", vertex_count);
+	 	//printf("vertex count is: %d \n", vertex_count);
 	 	for (e= g->e; e!= NULL; e=e->next)
 	 		edge_count++;
-	 	printf("edge count is: %d \n", edge_count);
+	 	//printf("edge count is: %d \n", edge_count);
 	 	run_kruskal(g, vertex_count, edge_count);
 
  }
