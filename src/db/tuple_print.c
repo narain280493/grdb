@@ -109,3 +109,39 @@ tuple_print(tuple_t t, enum_list_t el)
 	}
 	printf("]");
 }
+
+
+int 
+get_tuple_weight(tuple_t t, enum_list_t el)
+{
+ attribute_t attr;
+ int i, offset, val;
+ float fval;
+ double dval;
+
+ assert (t != NULL);
+ assert (t->buf != NULL);
+
+ //printf("[");
+
+ for (attr = t->s->attrlist; attr != NULL; attr = attr->next) {
+  offset = tuple_get_offset(t, attr->name);
+  if (offset >= 0) {
+   switch (attr->bt) {
+   
+   case INTEGER:
+    i = tuple_get_int(t->buf + offset);
+    //printf("%d", i);
+    return i;
+
+    break;
+
+   case BASE_TYPES_MAX:
+    break;
+   }
+  }
+
+  
+ }
+ return -1;
+}

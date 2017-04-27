@@ -117,6 +117,13 @@ cli()
 			cli_graph(cmdline, &pos);
 			continue;
 		}
+
+		// to display results of kruskals algorithm?
+		else if (strcmp(cmd, "kruskal") == 0 || strcmp(cmd, "k") == 0){
+		cli_kruskal(cmdline, pos);
+
+		continue;}
+
 	}
 }
 
