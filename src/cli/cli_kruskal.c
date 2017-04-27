@@ -141,7 +141,7 @@ void run_kruskal(graph_t g, int num_vertices, int num_edges)
  int total_cost =0;
 
  //storing the final MST edges.
- edge_t current_edge;
+ edge_t current_edge, ed;
  graph_t result_graph =NULL;
  graph_t sorted_graph;
  vertex_t v;
@@ -177,11 +177,14 @@ printf("initialized parent array \n");
 
 				// If including this edge does't cause cycle, include it
 				// in result and increment the index of result for next edge
+			
 			if (Union(parent, x, y))
 			{
 				printf("adding edge: ");
 				//add edge to final result
-				edge_print(current_edge);	
+				edge_print(current_edge);
+
+				total_cost += get_tuple_weight(current_edge->tuple, sorted_graph->el);	
 				
 				if(result_graph == NULL)
 				{
@@ -196,8 +199,17 @@ printf("initialized parent array \n");
 					v->id = current_edge->id2;
 
 					graph_insert_vertex(result_graph, v);
+
+					result_graph->se = sorted_graph->se;
+
+					ed = (edge_t) malloc(sizeof(struct edge));
+					assert (ed != NULL);
+					edge_init(ed);
+					edge_set_vertices(ed, current_edge->id1, current_edge->id2);
+
+					graph_insert_edge(result_graph, ed);
 				}
-				/*
+			
 				else
 				{
 					v = graph_find_vertex_by_id(result_graph, current_edge->id1);
@@ -225,9 +237,17 @@ printf("initialized parent array \n");
 
 							graph_insert_vertex(result_graph, w);
 					}
+
+					
+					ed = (edge_t) malloc(sizeof(struct edge));
+					assert (ed != NULL);
+					edge_init(ed);
+					edge_set_vertices(ed, current_edge->id1, current_edge->id2);
+
+					graph_insert_edge(result_graph, ed);
 						 
 				}
-				*/
+				
 				
 
 				
@@ -242,6 +262,8 @@ printf("initialized parent array \n");
 		
 		printf("result graph:");
 		graph_print(result_graph,1);
+
+		printf("total cost: %d \n", total_cost);
 		
 		return;
 }
