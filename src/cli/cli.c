@@ -129,6 +129,7 @@ cli()
 
 void cli_graphs_insert(graph_t g)
 {
+	printf("here");
 	graph_t f;
 
 	if (graphs == NULL) {

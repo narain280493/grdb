@@ -107,7 +107,7 @@ graph_t sort_given_graph(graph_t g)
 graph_t init_graph(int id1)
 {
 
- graph_t g;
+ graph_t temp;
  vertex_t v;
 	
  // Create first vertex in graph /
@@ -116,16 +116,20 @@ graph_t init_graph(int id1)
  vertex_init(v);
  v->id = id1;
 
+ printf("init vertex\n");
  // Create new graph /
- g = (graph_t) malloc(sizeof(struct graph));
- assert (g != NULL);
- graph_init(g);
- graph_insert_vertex(g, v);
+ temp = (graph_t) malloc(sizeof(struct graph));
+ assert (temp != NULL);
+ graph_init(temp);
+ graph_insert_vertex(temp, v);
 
+ printf("init the graph:\n");
  if (graphs == NULL)
-	current = g;
- cli_graphs_insert(g);
+	current = temp;
 
+ cli_graphs_insert(temp);
+
+ return temp;
 }
 
 void run_kruskal(graph_t g, int num_vertices, int num_edges)
@@ -163,8 +167,9 @@ printf("initialized parent array \n");
 	{
 		 
 		 	printf("found %d edges in the MST: %d",e);
-		 	current_edge = g->e;
+		 	current_edge = sorted_graph->e;
 		 	printf(" looking to add edge\n");
+
 			int x = find(parent, current_edge->id1);
 			int y = find(parent, current_edge->id2);
 
@@ -174,14 +179,13 @@ printf("initialized parent array \n");
 				// in result and increment the index of result for next edge
 			if (Union(parent, x, y))
 			{
-				printf("adding edge \n");
+				printf("adding edge: ");
 				//add edge to final result
-				edge_print(current_edge);
-
+				edge_print(current_edge);	
 				
-				/*
 				if(result_graph == NULL)
 				{
+					printf("result graph is null, init it.\n");
 					result_graph = init_graph(current_edge->id1);
 
 					// add vertex id2 now. 
@@ -193,6 +197,7 @@ printf("initialized parent array \n");
 
 					graph_insert_vertex(result_graph, v);
 				}
+				/*
 				else
 				{
 					v = graph_find_vertex_by_id(result_graph, current_edge->id1);
@@ -223,6 +228,7 @@ printf("initialized parent array \n");
 						 
 				}
 				*/
+				
 
 				
 						// increase edge count in the spanning tree
@@ -230,10 +236,12 @@ printf("initialized parent array \n");
 					 
 			}
 				// Else discard the next_edge
-			g->e = g->e->next;
+			sorted_graph->e = sorted_graph->e->next;
 
 		} 
 		
+		printf("result graph:");
+		graph_print(result_graph,1);
 		
 		return;
 }
