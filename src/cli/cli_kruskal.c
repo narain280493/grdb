@@ -49,7 +49,6 @@ graph_t sort_given_graph(graph_t g)
  int id2 =0;
  int e_weight = 0;
  int f_weight = 0;
-// printf("sorting graphs: \n");
 
  for (e = g->e; e!= NULL; e = e->next) 
  {
@@ -76,7 +75,7 @@ graph_t sort_given_graph(graph_t g)
 		if(e_weight > f_weight)
 		 {
 					temp = e;
-					edge_print(temp);
+					//edge_print(temp);
 					id1 = e->id1;
 					id2 = e->id2;
 					t = e-> tuple;
@@ -136,7 +135,6 @@ void run_kruskal(graph_t g, int num_vertices, int num_edges)
 {
  int parent[20];
  int V = num_vertices;
- int i=0;
  int e=0;
  int total_cost =0;
 
@@ -261,10 +259,10 @@ void run_kruskal(graph_t g, int num_vertices, int num_edges)
 
 		} 
 		
-		printf("result graph:");
+		printf("result graph: \n");
 		graph_print(result_graph,1);
 
-		printf("total cost: %d \n", total_cost);
+		printf("\n total cost: %d \n", total_cost);
 		
 		return;
 }
