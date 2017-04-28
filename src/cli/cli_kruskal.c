@@ -161,13 +161,13 @@ void run_kruskal(graph_t g, int num_vertices, int num_edges)
 
 //printf("initialized parent array \n");
 		
-	
+	current_edge = sorted_graph->e;
 		// terminating condition for mst
 	while(e < (V-1))
 	{
 		 
 		 	//printf("found %d edges in the MST: %d",e);
-		 	current_edge = sorted_graph->e;
+		 
 		 	//printf(" looking to add edge\n");
 
 			int x = find(parent, current_edge->id1);
@@ -257,7 +257,7 @@ void run_kruskal(graph_t g, int num_vertices, int num_edges)
 					 
 			}
 				// Else discard the next_edge
-			sorted_graph->e = sorted_graph->e->next;
+			current_edge = current_edge->next;
 
 		} 
 		
